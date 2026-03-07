@@ -43,7 +43,3 @@ This repository contains Go code and related resources.
 ## Requirements
 
 - Go 1.18 or higher
-
-## License
-
-Kamran Hossain Topu
