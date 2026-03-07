@@ -1,0 +1,2 @@
+createdb -U DB_USER -h DB_HOST -p PORT DB_NAME
+PGPASSWORD=PGPASSWORD psql -U DB_USER -h DB_HOST -d DB_NAME -f init.sql
