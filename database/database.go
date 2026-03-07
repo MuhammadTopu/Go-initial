@@ -29,7 +29,7 @@ func Connect(connectionString string) (*DB, error) {
 		return nil, fmt.Errorf("failed to ping database: %w", err)
 	}
 
-	log.Println("✅ Database connected successfully")
+	log.Println("|***Database connected successfully***|")
 
 	return &DB{db}, nil
 }
