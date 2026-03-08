@@ -11,6 +11,7 @@ type Config struct {
 	Database DatabaseConfig
 	Server   ServerConfig
 	JWT      JWTConfig
+	URL      URL
 }
 
 type DatabaseConfig struct {
@@ -31,24 +32,31 @@ type JWTConfig struct {
 	RefreshTokenTTL int // hours
 }
 
+type URL struct {
+	BaseURL string
+}
+
 func Load() (*Config, error) {
 	godotenv.Load()
 
 	config := &Config{
 		Database: DatabaseConfig{
-			Host:     getEnv("DB_HOST", "localhost"),
-			Port:     getEnv("DB_PORT", "5432"),
-			User:     getEnv("DB_USER", "postgres"),
-			Password: getEnv("DB_PASSWORD", "root"),
-			DBName:   getEnv("DB_NAME", "test"),
+			Host:     getEnv("DB_HOST", ""),
+			Port:     getEnv("DB_PORT", ""),
+			User:     getEnv("DB_USER", ""),
+			Password: getEnv("DB_PASSWORD", ""),
+			DBName:   getEnv("DB_NAME", ""),
 		},
 		Server: ServerConfig{
-			Port: getEnv("PORT", "5000"),
+			Port: getEnv("PORT", ""),
 		},
 		JWT: JWTConfig{
-			Secret:          getEnv("JWT_SECRET", "your-secret-key-change-in-production"),
+			Secret:          getEnv("JWT_SECRET", ""),
 			AccessTokenTTL:  24,
-			RefreshTokenTTL: 168, // 7 days
+			RefreshTokenTTL: 168,
+		},
+		URL: URL{
+			BaseURL: getEnv("URL", ""),
 		},
 	}
 

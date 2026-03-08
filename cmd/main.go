@@ -16,7 +16,7 @@ import (
 
 func main() {
 
-	//gin.SetMode(gin.ReleaseMode)
+	// /gin.SetMode(gin.ReleaseMode)
 	// Load configuration
 	cfg, err := config.Load()
 	if err != nil {
@@ -43,9 +43,19 @@ func main() {
 	// Setup router
 	router := gin.Default()
 
+	//serve static files
+	router.Static("/uploads/avatars", "./uploads/avatars")
+
+	//serve favicon
+	//router.StaticFile("/favicon.ico", "./static/favicon.ico")
+
 	// CORS middleware
 	router.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{"http://localhost:5173", "http://localhost:3000"},
+		AllowOrigins: []string{
+			"http://127.0.0.1:5500",
+			"http://localhost:5173",
+			"http://localhost:3000",
+		},
 		AllowMethods:     []string{"GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"},
 		AllowHeaders:     []string{"Origin", "Content-Type", "Authorization"},
 		ExposeHeaders:    []string{"Content-Length"},
@@ -75,6 +85,9 @@ func main() {
 
 		//User update profile
 		api.PUT("/users/profile", userHandler.UpdateProfile)
+
+		//upload avatar
+		api.POST("/users/avatar", userHandler.UploadAvatar)
 	}
 
 	// Start server
